@@ -1,5 +1,7 @@
 <?php
-namespace ANSR\Library\Exception;
-use Exception;
-class RegistryException extends Exception { }
 
+namespace ANSR\Library\Exception;
+
+use Exception;
+
+class RegistryException extends Exception { }
