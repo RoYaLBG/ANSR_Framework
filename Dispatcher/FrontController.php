@@ -11,6 +11,11 @@ class FrontController {
      * @var \ANSR\App
      */
     private $_app;
+    
+    /**
+     * @var \ANSR\Library\Request\Request
+     */
+    private $_request;
 
     /**
      * @var \ANSR\View
@@ -32,6 +37,7 @@ class FrontController {
      */
     public function dispatch() {
         try {
+            $this->initRequest();
             $this->initController();
             $this->initAction();
             $this->_controller->render();
@@ -68,7 +74,7 @@ class FrontController {
             if (!class_exists($class)) {
                 throw new \ANSR\Library\Exception\LoadException('Controller not found');
             }
-            $this->_controller = new $class($this->_app, $this->_view);
+            $this->_controller = new $class($this->_app, $this->_view, $this->_request);
         }
     }
 
@@ -85,6 +91,12 @@ class FrontController {
         }
         $method = $this->_method;
         $this->getController()->$method();
+    }
+    
+    private function initRequest() {
+        $this->getRouter()->registerRequest();
+        $post = new \ANSR\Library\Request\Post($_POST);
+        $this->_request = new \ANSR\Library\Request\Request(\ANSR\Library\Registry\Registry::get('request'), $post);
     }
 
 }

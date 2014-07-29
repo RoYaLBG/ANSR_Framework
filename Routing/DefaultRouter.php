@@ -7,8 +7,8 @@ namespace ANSR\Routing;
  */
 class DefaultRouter implements IRouter {
 
-    const REQUEST_URI_CONTROLLER = 1;
-    const REQUEST_URI_ACTION = 2;
+    const REQUEST_URI_CONTROLLER = 2;
+    const REQUEST_URI_ACTION = 3;
 
     public function getController() {
         return ucfirst(explode('/', $_SERVER['REQUEST_URI'])[self::REQUEST_URI_CONTROLLER]);
@@ -18,15 +18,18 @@ class DefaultRouter implements IRouter {
         return explode('/', $_SERVER['REQUEST_URI'])[self::REQUEST_URI_ACTION];
     }
 
-    public function pushActionParams() {
+    public function registerRequest() {
         $request = explode('/', $_SERVER['REQUEST_URI']);
         $params = array();
         foreach ($request as $key => $param) {
             if ($key > self::REQUEST_URI_ACTION) {
-                $params[] = $param;
+                if (isset($request[$key], $request[$key + 1])) {
+                    $params[$request[$key]] = $request[$key + 1];
+                    unset($request[$key + 1]);
+                }
             }
         }
-        \ANSR\Library\Registry\Registry::set('action_params', $params);
+        \ANSR\Library\Registry\Registry::set('request', $params);
     }
 
 }

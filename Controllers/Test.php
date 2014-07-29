@@ -11,6 +11,7 @@ class Test extends Controller {
 
     public function another() {
         $this->getView()->title = "This is another action from the same controller";
+        var_dump($this->getRequest()->getParams());
     }
 
 }

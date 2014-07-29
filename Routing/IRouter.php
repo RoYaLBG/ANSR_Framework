@@ -16,4 +16,9 @@ interface IRouter {
      * @return string (Action's name)
      */
     public function getAction();
+    
+    /**
+     * @return void
+     */
+    public function registerRequest();
 }

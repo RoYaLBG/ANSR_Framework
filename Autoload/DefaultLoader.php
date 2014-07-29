@@ -13,7 +13,7 @@ final class DefaultLoader extends AbstractLoader {
         $namespace = substr($class, 0, strrpos($class, '\\'));
         $namespace = str_replace('\\', DIRECTORY_SEPARATOR, $class);
         $classPath = ROOT . str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . '.php';
-        $classPath = str_replace('ANSR', '', $classPath);
+        $classPath = str_replace('ANSR', '', $classPath);   
         if (is_readable($classPath)) {
             require_once $classPath;
         }

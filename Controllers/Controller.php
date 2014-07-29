@@ -9,10 +9,12 @@ abstract class Controller {
 
     private $_app;
     private $_view;
-
-    public function __construct(\ANSR\App $app, \ANSR\View $view) {
+    private $_request;
+    
+    public function __construct(\ANSR\App $app, \ANSR\View $view, \ANSR\Library\Request\Request $request) {
         $this->_app = $app;
         $this->_view = $view;
+        $this->_request = $request;
         $this->init();
     }
 
@@ -24,9 +26,7 @@ abstract class Controller {
         $this->getView()->initTemplate();
     }
 
-    protected function init() {
-        
-    }
+    protected function init() { }
 
     /**
      * @return \ANSR\App
@@ -40,6 +40,13 @@ abstract class Controller {
      */
     protected function getView() {
         return $this->_view;
+    }
+    
+    /**
+     * @return \ANSR\Library\Request\Request
+     */
+    protected function getRequest() {
+        return $this->_request;
     }
 
 }

@@ -25,4 +25,4 @@
 define('ROOT', __DIR__ . DIRECTORY_SEPARATOR);
 include 'Autoload/DefaultLoader.php';
 Autoload\DefaultLoader::registerAutoload();
-\ANSR\Library\DependencyContainer\AppStarter::createApp('MySQLi_OO', 'DefaultRouter', 'production');
+\ANSR\Library\DependencyContainer\AppStarter::createApp('MySQLi_OO', 'DefaultRouter', 'development');
