@@ -3,7 +3,7 @@
 namespace ANSR;
 
 /**
- * @author Ivan Tonkov <ivanynkv@gmail.com>
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
  */
 class View {
 
