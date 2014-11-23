@@ -90,7 +90,11 @@ class FrontController {
             throw new \ANSR\Library\Exception\LoadException('Undefined method ' . $this->_method);
         }
         $method = $this->_method;
-        $this->getController()->$method();
+        if (\ANSR\Library\Registry\Registry::get('WEB_SERVICE') === true) {
+            die(json_encode($this->getController()->$method()));
+        } else {
+            $this->getController()->$method();
+        }
     }
     
     private function initRequest() {

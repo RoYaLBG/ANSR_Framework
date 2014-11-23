@@ -19,11 +19,13 @@ abstract class Controller {
     }
 
     /**
-     * Includes the apropriate view
+     * Includes the appropriate view
      * @return void
      */
     public function render() {
-        $this->getView()->initTemplate();
+        if (\ANSR\Library\Registry\Registry::get('WEB_SERVICE') !== true) {
+            $this->getView()->initTemplate();
+        }
     }
 
     protected function init() { }
