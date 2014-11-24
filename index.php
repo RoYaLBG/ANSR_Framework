@@ -30,8 +30,18 @@ $__router = '\ANSR\Routing\DefaultRouter';
 /** @var $__router \ANSR\Routing\IRouter|\ANSR\Routing\RouterAbstract */
 
 $__router
-    ::addRoute(new \ANSR\Routing\Route("/my/pattern/for/test/and/something/[0-9]+", "Test", "print_smth"))
-    ->addRoute(new \ANSR\Routing\Route("/my/pattern/for/anothertest/and/something/[0-9]+", "Test", "another"));
+    ::addRoute(
+        new \ANSR\Routing\Route("/my/pattern/for/test/and/something/[0-9]+", "Test", "print_smth")
+    )
+    ->addRoute(
+        (new \ANSR\Routing\Route("/my/pattern/for/anothertest/and/something/[0-9]+/[0-9]+", "Test", "another"))
+        ->addRequestMapping(
+            new \ANSR\Library\Request\RouteMap(6, 'id')
+        )
+        ->addRequestMapping(
+            new \ANSR\Library\Request\RouteMap(7, 'user_id')
+        )
+    );
 
 \ANSR\Library\Registry\Registry::set('WEB_SERVICE', true);
 

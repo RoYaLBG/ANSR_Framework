@@ -36,6 +36,16 @@ class DefaultRouter extends RouterAbstract implements IRouter {
                 }
             }
         }
+
+        if (($route = $this->getCustomRoute()) !== false ) {
+            $uri = str_replace(basename(ROOT) . "/", "", $_SERVER['REQUEST_URI']);
+            $uri = ltrim($uri, '/');
+            $uri = explode('/', $uri);
+            foreach ($route->getRequestMap() as $map) {
+                $params[$map->getRequestKey()] = $uri[$map->getPatternIndex()];
+            }
+        }
+
         \ANSR\Library\Registry\Registry::set('request', $params);
     }
 

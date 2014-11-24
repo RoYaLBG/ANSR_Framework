@@ -10,7 +10,7 @@ abstract class RouterAbstract {
 
     /**
      * @param Route $route
-     * @return void
+     * @return \ANSR\Routing\RouterAbstract static bound
      */
     public static function addRoute(Route $route) {
         self::$_routes[] = $route;
