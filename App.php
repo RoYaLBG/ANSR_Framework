@@ -26,7 +26,7 @@ final class App {
     }
 
     private function addRouters() {
-        $skipFiles = array('.', '..', 'IRouter.php');
+        $skipFiles = array('.', '..', 'IRouter.php', 'RouterAbstract.php', 'Route.php');
         foreach (scandir(ROOT . DIRECTORY_SEPARATOR . 'Routing') as $router) {
             if (!in_array($router, $skipFiles)) {
                 $router = str_replace('.php', '', $router);

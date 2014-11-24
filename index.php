@@ -1,5 +1,5 @@
 <?php
-
+ini_set('display_errors', 1);
 #################################################
 #                                               #
 #				ANSR Framework                  #
@@ -25,6 +25,13 @@
 define('ROOT', __DIR__ . DIRECTORY_SEPARATOR);
 include 'Autoload/DefaultLoader.php';
 Autoload\DefaultLoader::registerAutoload();
+
+$__router = '\ANSR\Routing\DefaultRouter';
+/** @var $__router \ANSR\Routing\IRouter|\ANSR\Routing\RouterAbstract */
+
+$__router
+    ::addRoute(new \ANSR\Routing\Route("/my/pattern/for/test/and/something/[0-9]+", "Test", "print_smth"))
+    ->addRoute(new \ANSR\Routing\Route("/my/pattern/for/anothertest/and/something/[0-9]+", "Test", "another"));
 
 \ANSR\Library\Registry\Registry::set('WEB_SERVICE', true);
 
