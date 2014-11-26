@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors', 1);
 #################################################
 #                                               #
 #				ANSR Framework                  #
@@ -26,11 +27,21 @@ include 'Autoload/DefaultLoader.php';
 Autoload\DefaultLoader::registerAutoload();
 
 $__router = '\ANSR\Routing\DefaultRouter';
-/** @var $__router \ANSR\Routing\IRouter|\ANSR\Routing\RouterAbstract */
 
+/**
+ * @var $__router \ANSR\Routing\IRouter|\ANSR\Routing\RouterAbstract
+ *
+ * The example routing here routes one request URI to different controller->actions() depending on the request method
+ * For instance when POST or GET is sent to e.g. http://yourApp.com/user/3 the app will invoke Users::view();
+ * If PUT is sent to the same address, the app will invoke Users::edit()
+ * If DELETE is sent - Users::delete() will be invoked.
+ *
+ * All of these methods will have pushed in the request with key "id" the "3" from the url.
+ * So it can be used in the controller as $this->getRequest()->getParam('id')
+ */
 $__router
     ::addRoute(
-        (new \ANSR\Routing\Route("/user/[0-9]+", "Users", "view", \ANSR\Library\Request\Request::TYPE_GET))
+        (new \ANSR\Routing\Route("/user/[0-9]+", "Users", "view")) //default is type standard which combines get and post
         ->addRequestMapping(
             new \ANSR\Library\Request\RouteMap(1, 'id')
         )

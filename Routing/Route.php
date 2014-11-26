@@ -28,17 +28,16 @@ class Route {
      */
     private $_requestMap = [];
 
-    public function __construct($pattern, $controller, $action, $requestMethod = \ANSR\Library\Request\Request::TYPE_GET) {
+    public function __construct($pattern, $controller, $action, $requestMethod = \ANSR\Library\Request\Request::TYPE_STANDARD) {
         $this->_pattern = $pattern;
         $this->_controller = $controller;
         $this->_action = $action;
 
-        if(!in_array($requestMethod, [
-            \ANSR\Library\Request\Request::TYPE_GET,
-            \ANSR\Library\Request\Request::TYPE_PUT,
-            \ANSR\Library\Request\Request::TYPE_POST,
-            \ANSR\Library\Request\Request::TYPE_DELETE
-        ])) {
+        $requestMethods = array_filter(array_flip((new \ReflectionClass('\ANSR\Library\Request\Request'))->getConstants()), function($const) {
+           return strpos($const, 'TYPE') === 0;
+        });
+
+        if(!in_array($requestMethod, array_keys($requestMethods))) {
             throw new \Exception('Invalid request method');
         }
         $this->_requestMethod = $requestMethod;

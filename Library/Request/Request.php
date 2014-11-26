@@ -23,6 +23,7 @@ class Request {
     const TYPE_PUT = 'PUT';
     const TYPE_POST = 'POST';
     const TYPE_DELETE = 'DELETE';
+    const TYPE_STANDARD = 'GET|POST';
     
     
     public function __construct($params, Post $post, Put $put) {

@@ -2,6 +2,19 @@
 
 namespace ANSR\Library\Request;
 
+/**
+ * Class RouteMap
+ *
+ * A route map that consists of which placeholder in the route pattern
+ * should be pushed in the request object.
+ *
+ * E.g. in pattern /user/[0-9]+ (resulting in http://yourApp.com/user/3)
+ * a patternIndex 1 (referring to [0-9]+) and a requestKey "userId"
+ * will result into hash "user_id" => 3. So calling from the controller
+ * $this->getRequest()->getParam('user_id'); will return "3";
+ *
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ */
 class RouteMap {
 
     /**
