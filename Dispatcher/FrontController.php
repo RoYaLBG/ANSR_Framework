@@ -99,8 +99,11 @@ class FrontController {
     
     private function initRequest() {
         $this->getRouter()->registerRequest();
+        parse_str(file_get_contents("php://input"), $_PUT);
+
         $post = new \ANSR\Library\Request\Post($_POST);
-        $this->_request = new \ANSR\Library\Request\Request(\ANSR\Library\Registry\Registry::get('request'), $post);
+        $put = new \ANSR\Library\Request\Put($_PUT);
+        $this->_request = new \ANSR\Library\Request\Request(\ANSR\Library\Registry\Registry::get('request'), $post, $put);
     }
 
 }

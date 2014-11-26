@@ -13,11 +13,22 @@ class Request {
      * @var Post
      */
     private $_post;
+
+    /**
+     * @var Put
+     */
+    private $_put;
+
+    const TYPE_GET = 'GET';
+    const TYPE_PUT = 'PUT';
+    const TYPE_POST = 'POST';
+    const TYPE_DELETE = 'DELETE';
     
     
-    public function __construct($params, Post $post) {
+    public function __construct($params, Post $post, Put $put) {
         $this->_params = $params;
         $this->_post = $post;
+        $this->_put = $put;
     }
     
     /**
@@ -25,6 +36,13 @@ class Request {
      */
     public function getPost() {
         return $this->_post;
+    }
+
+    /**
+     * @return Put
+     */
+    public function getPut() {
+        return $this->_put;
     }
     
     public function getParams() {

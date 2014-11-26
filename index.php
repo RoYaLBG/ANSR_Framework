@@ -1,5 +1,4 @@
 <?php
-ini_set('display_errors', 1);
 #################################################
 #                                               #
 #				ANSR Framework                  #
@@ -31,17 +30,25 @@ $__router = '\ANSR\Routing\DefaultRouter';
 
 $__router
     ::addRoute(
-        new \ANSR\Routing\Route("/my/pattern/for/test/and/something/[0-9]+", "Test", "print_smth")
+        (new \ANSR\Routing\Route("/user/[0-9]+", "Users", "view", \ANSR\Library\Request\Request::TYPE_GET))
+        ->addRequestMapping(
+            new \ANSR\Library\Request\RouteMap(1, 'id')
+        )
     )
     ->addRoute(
-        (new \ANSR\Routing\Route("/my/pattern/for/anothertest/and/something/[0-9]+/[0-9]+", "Test", "another"))
+        (new \ANSR\Routing\Route("/user/[0-9]+", "Users", "edit", \ANSR\Library\Request\Request::TYPE_PUT))
         ->addRequestMapping(
-            new \ANSR\Library\Request\RouteMap(6, 'id')
+            new \ANSR\Library\Request\RouteMap(1, 'id')
         )
+    )
+    ->addRoute(
+        (new \ANSR\Routing\Route("/user/[0-9]+", "Users", "delete", \ANSR\Library\Request\Request::TYPE_DELETE))
         ->addRequestMapping(
-            new \ANSR\Library\Request\RouteMap(7, 'user_id')
+            new \ANSR\Library\Request\RouteMap(1, 'id')
         )
     );
+
+
 
 \ANSR\Library\Registry\Registry::set('WEB_SERVICE', true);
 

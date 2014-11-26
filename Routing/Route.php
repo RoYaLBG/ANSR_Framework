@@ -19,14 +19,29 @@ class Route {
     private $_action;
 
     /**
+     * @var string
+     */
+    private $_requestMethod;
+
+    /**
      * @var \ANSR\Library\Request\RouteMap[]
      */
     private $_requestMap = [];
 
-    public function __construct($pattern, $controller, $action) {
+    public function __construct($pattern, $controller, $action, $requestMethod = \ANSR\Library\Request\Request::TYPE_GET) {
         $this->_pattern = $pattern;
         $this->_controller = $controller;
         $this->_action = $action;
+
+        if(!in_array($requestMethod, [
+            \ANSR\Library\Request\Request::TYPE_GET,
+            \ANSR\Library\Request\Request::TYPE_PUT,
+            \ANSR\Library\Request\Request::TYPE_POST,
+            \ANSR\Library\Request\Request::TYPE_DELETE
+        ])) {
+            throw new \Exception('Invalid request method');
+        }
+        $this->_requestMethod = $requestMethod;
     }
 
     /**
@@ -66,5 +81,12 @@ class Route {
      */
     public function getRequestMap() {
         return $this->_requestMap;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequestMethod() {
+        return $this->_requestMethod;
     }
 }

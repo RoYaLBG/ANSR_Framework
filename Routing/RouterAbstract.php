@@ -32,7 +32,7 @@ abstract class RouterAbstract {
         foreach (self::getRoutes() as $route) {
             $pattern = '/' . str_replace("/", "\\/", $route->getPattern()) . '/';
             $against = str_replace(basename(ROOT) . "/", "", $_SERVER['REQUEST_URI']);
-            if (preg_match($pattern, $against)) {
+            if (preg_match($pattern, $against) && $route->getRequestMethod() == $_SERVER['REQUEST_METHOD']) {
                 return $route;
             }
         }

@@ -51,4 +51,12 @@ abstract class Controller {
         return $this->_request;
     }
 
+    protected function error(array $params = []) {
+        return array_merge(['success' => 0], $params);
+    }
+
+    protected function success(array $params = []) {
+        return array_merge(['success' => 1], $params);
+    }
+
 }

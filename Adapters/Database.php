@@ -23,13 +23,18 @@ abstract class Database {
         $this->query("SET NAMES utf8");
     }
 
-    protected function connect() {
-        
-    }
+    abstract protected function connect();
 
-    protected function query($query) {
-        
-    }
+    abstract public function query($query);
 
+    public function fetch($result) { }
+
+    public function result($result) { }
+
+    public function row($result) { }
+
+    public function escape($string) { }
+
+    public function affectedRows() { }
 }
 
