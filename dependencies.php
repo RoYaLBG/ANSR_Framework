@@ -18,7 +18,13 @@ $container->addBean(
 
 $container->addBean(
     \ANSR\Core\Http\Component\SessionInterface::class,
-    new \ANSR\Core\Http\Component\Session($_SESSION)
+    new \ANSR\Core\Http\Component\Session(new class implements \ANSR\Core\Http\Component\SessionInitializerInterface {
+        public function &__invoke(): array
+        {
+            session_start();
+            return $_SESSION;
+        }
+    })
 );
 
 $container->registerDependency(

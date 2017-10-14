@@ -7,9 +7,9 @@ class Session implements SessionInterface
 
     const KEY_FLASH_MESSAGES = '___FLASH___';
 
-    public function __construct(array &$sessions)
+    public function __construct(SessionInitializerInterface $sessionInitializer)
     {
-        $this->sessions = &$sessions;
+        $this->sessions = &$sessionInitializer();
     }
 
     public function getAttribute(string $key): string
