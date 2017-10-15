@@ -3,9 +3,12 @@ namespace ANSR\Core\Annotation\Parser;
 
 
 use ANSR\Core\Annotation\AnnotationInterface;
+use ANSR\Core\Annotation\Type\Component;
 
 /**
  * @author Ivan Yonkov <ivanynkv@gmail.com>
+ *
+ * @Component
  */
 class AnnotationParser implements AnnotationParserInterface
 {
@@ -77,8 +80,6 @@ class AnnotationParser implements AnnotationParserInterface
                     $value = substr($value, 0, strpos($value, '")'));
                     $properties[AnnotationTokenInterface::CONSTRUCTOR_VALUE] = $value;
                 }
-
-
             }
 
             $token = new DefaultAnnotationToken($annotationName, $properties);
@@ -88,7 +89,11 @@ class AnnotationParser implements AnnotationParserInterface
                 $builder = $builder->setProperty($key, $value);
             }
 
-            $annotations[basename($annotationName)] = $builder->build();
+            if (!array_key_exists(basename($annotationName), $annotations)) {
+                $annotations[basename($annotationName)] = [];
+            }
+            $annotations[basename($annotationName)][] = $builder->build();
+
         }
 
         return $annotations;

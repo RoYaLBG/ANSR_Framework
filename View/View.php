@@ -4,12 +4,16 @@ namespace ANSR\View;
 use ANSR\Config\Path\PathConfigInterface;
 use ANSR\Core\Annotation\Strategy\RouteExecutionStrategy;
 use ANSR\Core\Application;
+use ANSR\Core\WebApplication;
 use ANSR\Core\Http\Component\SessionInterface;
 use ANSR\Core\Http\Response\ViewResponse;
 use ANSR\Routing\RouterInterface;
+use ANSR\Core\Annotation\Type\Component;
 
 /**
  * @author Ivan Yonkov <ivanynkv@gmail.com>
+ *
+ * @Component
  */
 class View implements ViewInterface
 {

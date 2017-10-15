@@ -1,12 +1,12 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: RoYaL
- * Date: 12/22/2016
- * Time: 7:23 PM
- */
 
 namespace ANSR\Core\Container;
+
+
+use ANSR\Config\Variables;
+use ANSR\Core\Annotation\Strategy\ComponentExecutionStrategy;
+use ANSR\Core\Annotation\Strategy\ValueExecutionStrategy;
+
 
 /**
  * @author Ivan Yonkov <ivanynkv@gmail.com>
@@ -22,6 +22,11 @@ class DefaultContainer implements ContainerInterface
      * @var object[]
      */
     private $resolvedDependencies = [];
+
+    /**
+     * @var string[]
+     */
+    private $values = [];
 
     public function registerDependency(string $abstraction, string $implementation)
     {
@@ -64,10 +69,17 @@ class DefaultContainer implements ContainerInterface
         $parameters = $constructor->getParameters();
 
         $arguments = [];
+        $dependentValues = isset($this->values[$refClass->getName()])
+            ? $this->values[$refClass->getName()]
+            : [];
         foreach ($parameters as $parameter) {
-            $dependencyInterface = $parameter->getClass();
-            $dependencyClass = $this->dependencies[$dependencyInterface->getName()];
-            $arguments[] = $this->resolve($dependencyClass, $dependencyInterface->getName());
+            if (array_key_exists($parameter->getName(), $dependentValues)) {
+                $arguments[] = Variables::$args[$dependentValues[$parameter->getName()]];
+            } else {
+                $dependencyInterface = $parameter->getClass();
+                $dependencyClass = $this->dependencies[$dependencyInterface->getName()];
+                $arguments[] = $this->resolve($dependencyClass, $dependencyInterface->getName());
+            }
         }
 
         $object = $refClass->newInstanceArgs($arguments);
@@ -87,5 +99,19 @@ class DefaultContainer implements ContainerInterface
     public function exists($abstraction): bool
     {
         return array_key_exists($abstraction, $this->dependencies);
+    }
+
+    public function initialLoad(string $path)
+    {
+        $loadedDependencies = include $path . DIRECTORY_SEPARATOR . ComponentExecutionStrategy::CACHE_FILE;
+        foreach ($loadedDependencies as $abstraction => $implementations) {
+            $highestPriority = max(array_keys($implementations));
+            $this->registerDependency($abstraction, $implementations[$highestPriority]);
+        }
+
+        $loadedValues = include $path . DIRECTORY_SEPARATOR . ValueExecutionStrategy::CACHE_FILE;
+        foreach ($loadedValues as $implementation => $values) {
+            $this->values[$implementation] = $values;
+        }
     }
 }

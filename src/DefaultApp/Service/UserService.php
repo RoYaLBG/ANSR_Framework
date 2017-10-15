@@ -6,7 +6,11 @@ namespace DefaultApp\Service;
 use ANSR\Driver\DatabaseInterface;
 use DefaultApp\Model\Entity\Role;
 use DefaultApp\Model\Entity\User;
+use ANSR\Core\Annotation\Type\Component;
 
+/**
+ * @Component
+ */
 class UserService implements UserServiceInterface
 {
     /**

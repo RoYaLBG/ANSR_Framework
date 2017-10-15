@@ -6,7 +6,7 @@ namespace ANSR\Routing;
 use ANSR\Config\Path\PathConfigInterface;
 use ANSR\Core\Annotation\Strategy\AuthExecutionStrategy;
 use ANSR\Core\Annotation\Strategy\RouteExecutionStrategy;
-use ANSR\Core\Application;
+use ANSR\Core\WebApplication;
 use ANSR\Core\Container\ContainerInterface;
 use ANSR\Core\Http\Component\RequestInterface;
 use ANSR\Core\Http\Response\RedirectResponse;
@@ -14,9 +14,12 @@ use ANSR\Core\Http\Response\ResponseInterface;
 use ANSR\Core\IO\DirectoryTraverser;
 use ANSR\Core\Service\Authentication\AuthenticationServiceInterface;
 use ANSR\View\ViewInterface;
+use ANSR\Core\Annotation\Type\Component;
 
 /**
  * @author Ivan Yonkov <ivanynkv@gmail.com>
+ *
+ * @Component
  */
 class DefaultRouter implements RouterInterface
 {
@@ -208,7 +211,7 @@ class DefaultRouter implements RouterInterface
         }
         $name = "";
 
-        $appFolder = Application::APPLICATIONS_FOLDER;
+        $appFolder = WebApplication::APPLICATIONS_FOLDER;
 
         foreach (scandir($appFolder) as $dir) {
             if ($dir == '.' || $dir == '..' || !is_dir($appFolder . DIRECTORY_SEPARATOR . $dir)) {

@@ -1,6 +1,9 @@
 <?php
 namespace ANSR\Core\Http\Component;
 
+/**
+ * @Component
+ */
 class Cookie implements CookieInterface
 {
     private $cookies = [];

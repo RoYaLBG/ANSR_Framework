@@ -3,6 +3,11 @@
 namespace ANSR\Config\Cache;
 
 
+use ANSR\Core\Annotation\Type\Component;
+
+/**
+ * @Component
+ */
 class DefaultCacheConfig implements CacheConfigInterface
 {
 

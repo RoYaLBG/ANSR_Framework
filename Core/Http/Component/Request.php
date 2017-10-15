@@ -1,6 +1,12 @@
 <?php
 namespace ANSR\Core\Http\Component;
 
+use ANSR\Core\Annotation\Type\Component;
+use ANSR\Core\Annotation\Type\Value;
+
+/**
+ * @Component
+ */
 class Request implements RequestInterface
 {
     private $request = [];
@@ -8,6 +14,12 @@ class Request implements RequestInterface
     private $uri;
     private $host;
 
+    /**
+     * @Value("http.request", param="request")
+     * @Value("http.context", param="httpInfo")
+     * @Value("http.uri", param="uri")
+     * @Value("http.host", param="host")
+     */
     public function __construct(array $request, array $httpInfo, $uri, $host)
     {
         $this->request = $request;

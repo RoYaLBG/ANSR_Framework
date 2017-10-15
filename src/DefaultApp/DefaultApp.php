@@ -13,10 +13,10 @@ class DefaultApp extends FrameworkConsumer
     {
         parent::preLoadHook();
 
-        $this->container->registerDependency(
-            UserServiceInterface::class,
-            UserService::class
-        );
+//        $this->container->registerDependency(
+//            UserServiceInterface::class,
+//            UserService::class
+//        );
     }
 
 }

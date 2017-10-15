@@ -21,4 +21,6 @@ interface ContainerInterface
     public function getDependency($abstraction);
 
     public function exists($abstraction): bool;
+
+    public function initialLoad(string $path);
 }

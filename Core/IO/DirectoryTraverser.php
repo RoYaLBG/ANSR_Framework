@@ -2,6 +2,9 @@
 
 namespace ANSR\Core\IO;
 
+
+use ANSR\Core\Application;
+
 /**
  * @author Ivan Yonkov <ivanynkv@gmail.com>
  */
@@ -15,7 +18,6 @@ class DirectoryTraverser
     {
         $iterator = dir($directory);
         $handle = $iterator->handle;
-
         while ($file = $iterator->read($handle)) {
             if ($file == '.' || $file == '..') {
                 continue;
@@ -26,7 +28,6 @@ class DirectoryTraverser
             if (is_dir($fullName)) {
                 yield from self::findApplicationClasses($fullName);
             } else {
-
                 $className = str_replace(".php", "", $fullName);
                 $className = ltrim($className, '.');
                 $className = str_replace(DIRECTORY_SEPARATOR, "\\", $className);

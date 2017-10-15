@@ -3,18 +3,24 @@ namespace ANSR\Core;
 
 
 use ANSR\Autoload\AutoloadRegistrarInterface;
+use ANSR\Config\Path\PathConfigInterface;
 use ANSR\Core\Annotation\Processor\AnnotationProcessorInterface;
 use ANSR\Core\Container\ContainerInterface;
-use ANSR\Routing\RouterInterface;
-use ANSR\View\ViewInterface;
 
-/**
- * @author Ivan Yonkov <ivanynkv@gmail.com>
- */
 class Application
 {
     const VENDOR = 'ANSR';
     const APPLICATIONS_FOLDER = 'src';
+
+    /**
+     * @var AnnotationProcessorInterface
+     */
+    private $annotationProcessor;
+
+    /**
+     * @var PathConfigInterface
+     */
+    private $pathConfig;
 
     /**
      * @var ContainerInterface
@@ -26,51 +32,39 @@ class Application
      */
     private $autoloadRegistrar;
 
-    /**
-     * @var AnnotationProcessorInterface
-     */
-    private $annotationProcessor;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var ViewInterface
-     */
-    private $view;
-
     private $applications;
 
-    public function __construct(ContainerInterface $container,
-                                AutoloadRegistrarInterface $autoloadRegistrar,
-                                AnnotationProcessorInterface $annotationProcessor,
-                                RouterInterface $router,
-                                ViewInterface $view)
+    public function __construct(AnnotationProcessorInterface $annotationProcessor,
+                                PathConfigInterface $pathConfig,
+                                ContainerInterface $container,
+                                AutoloadRegistrarInterface $autoloadRegistrar)
     {
+        $this->annotationProcessor = $annotationProcessor;
+        $this->pathConfig = $pathConfig;
         $this->container = $container;
         $this->autoloadRegistrar = $autoloadRegistrar;
-        $this->annotationProcessor = $annotationProcessor;
-        $this->router = $router;
-        $this->view = $view;
         $this->applications = [];
     }
 
-    public function start()
+    /**
+     * @param WebApplicationProducerInterface|callable $webApplicationProducer
+     */
+    public function start($webApplicationProducer)
     {
         $this->annotationProcessor->process(
-            array_map(
+            array_merge(array_map(
                 function($app) {
                     return self::APPLICATIONS_FOLDER . DIRECTORY_SEPARATOR . $app;
                 },
                 $this->applications
-            )
+            ), ['.'])
         );
 
-        $response = $this->router->dispatch();
+        $this->container->initialLoad(
+            $this->pathConfig->getCacheDir()
+        );
 
-        $response->send();
+        $webApplicationProducer()->start();
     }
 
     public function registerApplication($applicationName)
@@ -78,16 +72,18 @@ class Application
         $this->applications[] = $applicationName;
 
         $this->autoloadRegistrar->register(function($class) use($applicationName) {
-           if (!strstr($class, $applicationName)) {
-               return;
-           }
+            if (!strstr($class, $applicationName)) {
+                return;
+            }
 
             $class = str_replace("\\", "/", $class);
             $class = self::APPLICATIONS_FOLDER
                 . DIRECTORY_SEPARATOR
                 . $class;
 
-            require_once $class . '.php';
+            if (is_readable($class . '.php')) {
+                require_once $class . '.php';
+            }
         });
 
         $consumerClass = $applicationName . '\\' . $applicationName;
@@ -99,5 +95,4 @@ class Application
             $consumer->preLoadHook();
         }
     }
-
 }

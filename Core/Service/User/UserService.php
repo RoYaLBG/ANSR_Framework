@@ -4,9 +4,12 @@ namespace ANSR\Core\Service\User;
 
 use ANSR\Core\Service\Encryption\EncryptionServiceInterface;
 use ANSR\Driver\DatabaseInterface;
+use ANSR\Core\Annotation\Type\Component;
 
 /**
  * @author Ivan Yonkov <ivanynkv@gmail.com>
+ *
+ * @Component
  */
 class UserService implements UserServiceInterface
 {

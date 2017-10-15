@@ -1,6 +1,11 @@
 <?php
 namespace ANSR\Core\Http\Component;
 
+use ANSR\Core\Annotation\Type\Component;
+
+/**
+ * @Component
+ */
 class Session implements SessionInterface
 {
     private $sessions = [];

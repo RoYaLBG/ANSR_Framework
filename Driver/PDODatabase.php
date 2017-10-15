@@ -1,10 +1,23 @@
 <?php
 namespace ANSR\Driver;
 
+
+use ANSR\Core\Annotation\Type\Component;
+use ANSR\Core\Annotation\Type\Value;
+
+/**
+ * @Component("10")
+ */
 class PDODatabase implements DatabaseInterface
 {
     private $pdo;
 
+    /**
+     * @Value("db.host", param="host")
+     * @Value("db.user", param="user")
+     * @Value("db.pass", param="pass")
+     * @Value("db.name", param="name")
+     */
     public function __construct($host, $user, $pass, $name)
     {
         $dsn = "mysql:host=" . $host . ";dbname=" . $name;

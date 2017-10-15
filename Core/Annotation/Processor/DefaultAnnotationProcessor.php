@@ -9,6 +9,7 @@ use ANSR\Config\Path\PathConfigInterface;
 use ANSR\Core\Annotation\Parser\AnnotationParserInterface;
 use ANSR\Core\Annotation\Strategy\AnnotationExecutionStrategyFactoryInterface;
 use ANSR\Core\Application;
+use ANSR\Core\WebApplication;
 use ANSR\Core\IO\DirectoryTraverser;
 
 /**
@@ -73,6 +74,12 @@ class DefaultAnnotationProcessor implements AnnotationProcessorInterface
             }
 
             try {
+                if ($fileName[0] == DIRECTORY_SEPARATOR) {
+                    $fileName = substr($fileName, 1, strlen($fileName)-1);
+                }
+                if (!is_readable($fileName . '.php')) {
+                    continue;
+                }
                 $tokens = token_get_all(file_get_contents($fileName . '.php'));
                 $isClass = false;
                 foreach ($tokens as $token) {
@@ -86,15 +93,28 @@ class DefaultAnnotationProcessor implements AnnotationProcessorInterface
                     continue;
                 }
 
+                if (strpos($fileName, $directory) !== 0) {
+                    $className =
+                        DIRECTORY_SEPARATOR
+                        . Application::VENDOR
+                        . $className;
+                }
+
                 $refClass = new \ReflectionClass($className);
+
                 $classAnnotations = $this->annotationParser->parse($refClass);
-                foreach ($classAnnotations as $name => $annotation) {
-                    $this->strategyFactory->create($name, $annotation)->execute();
+
+                foreach ($classAnnotations as $name => $annotationsByName) {
+                    foreach ($annotationsByName as $annotation) {
+                        $this->strategyFactory->create($name, $annotation)->execute();
+                    }
                 }
                 foreach ($refClass->getMethods() as $method) {
                     $methodAnnotations = $this->annotationParser->parse($method);
-                    foreach ($methodAnnotations as $name => $annotation) {
-                        $this->strategyFactory->create($name, $annotation)->execute();
+                    foreach ($methodAnnotations as $name => $annotationsByName) {
+                        foreach ($annotationsByName as $annotation) {
+                            $this->strategyFactory->create($name, $annotation)->execute();
+                        }
                     }
                 }
             } catch (\Exception $e) {

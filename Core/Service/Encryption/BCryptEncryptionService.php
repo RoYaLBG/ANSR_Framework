@@ -1,8 +1,14 @@
 <?php
 namespace ANSR\Core\Service\Encryption;
 
+
+use ANSR\Core\Annotation\Type\Component;
+
+
 /**
  * @author Ivan Yonkov <ivanynkv@gmail.com>
+ *
+ * @Component
  */
 class BCryptEncryptionService implements EncryptionServiceInterface
 {

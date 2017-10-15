@@ -6,9 +6,12 @@ namespace ANSR\Core\Service\Authentication;
 use ANSR\Core\Http\Component\SessionInterface;
 use ANSR\Core\Service\Encryption\EncryptionServiceInterface;
 use ANSR\Driver\DatabaseInterface;
+use ANSR\Core\Annotation\Type\Component;
 
 /**
  * @author Ivan Yonkov <ivanynkv@gmail.com>
+ *
+ * @Component
  */
 class AuthenticationService implements AuthenticationServiceInterface
 {
