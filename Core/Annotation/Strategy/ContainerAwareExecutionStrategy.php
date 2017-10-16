@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: RoYaL
- * Date: 12/22/2016
- * Time: 7:30 PM
- */
 
 namespace ANSR\Core\Annotation\Strategy;
 

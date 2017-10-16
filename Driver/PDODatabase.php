@@ -1,4 +1,5 @@
 <?php
+
 namespace ANSR\Driver;
 
 
@@ -6,6 +7,8 @@ use ANSR\Core\Annotation\Type\Component;
 use ANSR\Core\Annotation\Type\Value;
 
 /**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ *
  * @Component("10")
  */
 class PDODatabase implements DatabaseInterface

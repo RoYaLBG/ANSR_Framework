@@ -1,4 +1,5 @@
 <?php
+
 namespace ANSR\Core\Http;
 
 
@@ -6,6 +7,9 @@ use ANSR\Core\Http\Component\CookieInterface;
 use ANSR\Core\Http\Component\RequestInterface;
 use ANSR\Core\Http\Component\SessionInterface;
 
+/**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ */
 class HttpContext implements HttpContextInterface
 {
     /**

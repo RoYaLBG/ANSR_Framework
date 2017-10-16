@@ -14,6 +14,9 @@ use DefaultApp\Model\Form\UserLoginBindingModel;
 use DefaultApp\Model\Form\UserRegisterBindingModel;
 use DefaultApp\Model\View\UserProfileViewModel;
 
+/**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ */
 class UsersController extends Controller
 {
     /**

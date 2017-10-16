@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: RoYaL
- * Date: 12/24/2016
- * Time: 1:06 AM
- */
-
 namespace ANSR\Core;
 
 

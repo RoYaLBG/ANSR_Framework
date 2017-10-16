@@ -35,7 +35,7 @@ class ValueExecutionStrategy extends ContainerAwareExecutionStrategy
         }
 
         $concrete = $this->annotation->getAnnotatedClass()->getName();
-        if(!isset($values[$concrete])) {
+        if (!isset($values[$concrete])) {
             $values[$concrete] = [];
         }
 

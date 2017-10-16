@@ -3,7 +3,6 @@
 namespace ANSR\Core\Annotation\Processor;
 
 
-
 use ANSR\Config\Cache\CacheConfigInterface;
 use ANSR\Config\Path\PathConfigInterface;
 use ANSR\Core\Annotation\Parser\AnnotationParserInterface;
@@ -75,7 +74,7 @@ class DefaultAnnotationProcessor implements AnnotationProcessorInterface
 
             try {
                 if ($fileName[0] == DIRECTORY_SEPARATOR) {
-                    $fileName = substr($fileName, 1, strlen($fileName)-1);
+                    $fileName = substr($fileName, 1, strlen($fileName) - 1);
                 }
                 if (!is_readable($fileName . '.php')) {
                     continue;

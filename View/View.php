@@ -1,4 +1,5 @@
 <?php
+
 namespace ANSR\View;
 
 use ANSR\Config\Path\PathConfigInterface;
@@ -110,7 +111,7 @@ class View implements ViewInterface
         if (is_array($params[0])) {
             $params = $params[0];
             foreach ($tokens as $token) {
-                if (strpos($token, '(') !== 0 || strpos($token, ')') !== strlen($token)-1) {
+                if (strpos($token, '(') !== 0 || strpos($token, ')') !== strlen($token) - 1) {
                     $uri .= '/' . $token;
                     continue;
                 }

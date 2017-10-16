@@ -9,6 +9,9 @@ use ANSR\Core\Http\Response\ViewResponse;
 use ANSR\Core\Service\Authentication\AuthenticationService;
 use ANSR\View\ViewInterface;
 
+/**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ */
 class Controller
 {
     /**

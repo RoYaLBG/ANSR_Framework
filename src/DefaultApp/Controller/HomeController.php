@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: RoYaL
- * Date: 12/24/2016
- * Time: 1:21 AM
- */
 
 namespace DefaultApp\Controller;
 
@@ -12,6 +6,9 @@ namespace DefaultApp\Controller;
 use ANSR\Core\Controller\Controller;
 use ANSR\Core\Annotation\Type\Route;
 
+/**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ */
 class HomeController extends Controller
 {
     /**

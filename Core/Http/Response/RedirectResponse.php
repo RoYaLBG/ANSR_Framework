@@ -2,7 +2,9 @@
 
 namespace ANSR\Core\Http\Response;
 
-
+/**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ */
 class RedirectResponse implements ResponseInterface
 {
     private $location;

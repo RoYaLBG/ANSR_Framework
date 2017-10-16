@@ -5,6 +5,9 @@ namespace ANSR\Core\Http\Response;
 
 use ANSR\View\ViewInterface;
 
+/**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ */
 class ViewResponse implements ResponseInterface
 {
     private $viewFile;

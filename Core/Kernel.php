@@ -1,8 +1,13 @@
 <?php
+
 namespace ANSR\Core;
+
 
 use ANSR\Core\Container\ContainerInterface;
 
+/**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ */
 class Kernel
 {
     /**
@@ -21,7 +26,8 @@ class Kernel
     {
         $this->container = $container;
         $this->hasBoot = false;
-        $this->configOverrideDelegate = function (ContainerInterface $c) { };
+        $this->configOverrideDelegate = function (ContainerInterface $c) {
+        };
     }
 
     /**

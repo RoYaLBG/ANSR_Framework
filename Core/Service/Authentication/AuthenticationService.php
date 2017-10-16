@@ -1,6 +1,6 @@
 <?php
-namespace ANSR\Core\Service\Authentication;
 
+namespace ANSR\Core\Service\Authentication;
 
 
 use ANSR\Core\Http\Component\SessionInterface;

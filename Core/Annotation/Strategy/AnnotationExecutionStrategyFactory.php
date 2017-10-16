@@ -24,7 +24,7 @@ class AnnotationExecutionStrategyFactory implements AnnotationExecutionStrategyF
 
 
     public function create(string $name,
-                           AnnotationInterface $annotation) : AnnotationExecutionStrategyInterface
+                           AnnotationInterface $annotation): AnnotationExecutionStrategyInterface
     {
         $suffix = AnnotationExecutionStrategyInterface::STRATEGY_SUFFIX;
         $strategyName = __NAMESPACE__ . '\\' . $name . $suffix;

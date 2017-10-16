@@ -1,10 +1,13 @@
 <?php
+
 namespace ANSR\Core\Http\Component;
 
 use ANSR\Core\Annotation\Type\Component;
 use ANSR\Core\Annotation\Type\Value;
 
 /**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ *
  * @Component
  */
 class Request implements RequestInterface

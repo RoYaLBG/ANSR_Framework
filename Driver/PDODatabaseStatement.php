@@ -1,6 +1,10 @@
 <?php
+
 namespace ANSR\Driver;
 
+/**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ */
 class PDODatabaseStatement implements DatabaseStatementInterface
 {
     private $statement;

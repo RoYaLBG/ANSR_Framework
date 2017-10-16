@@ -1,4 +1,5 @@
 <?php
+
 namespace ANSR\Config;
 
 class DbConfig

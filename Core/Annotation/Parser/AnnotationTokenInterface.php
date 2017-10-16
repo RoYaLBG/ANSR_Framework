@@ -1,4 +1,5 @@
 <?php
+
 namespace ANSR\Core\Annotation\Parser;
 
 

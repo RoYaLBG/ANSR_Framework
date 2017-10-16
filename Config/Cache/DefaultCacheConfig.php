@@ -6,6 +6,8 @@ namespace ANSR\Config\Cache;
 use ANSR\Core\Annotation\Type\Component;
 
 /**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ *
  * @Component
  */
 class DefaultCacheConfig implements CacheConfigInterface

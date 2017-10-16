@@ -1,7 +1,10 @@
 <?php
+
 namespace ANSR\Core\Http\Component;
 
 /**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ *
  * @Component
  */
 class Cookie implements CookieInterface

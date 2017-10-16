@@ -1,4 +1,5 @@
 <?php
+
 namespace ANSR\View;
 
 use ANSR\Core\Http\Response\ViewResponse;

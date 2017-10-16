@@ -49,7 +49,7 @@ class RouteExecutionStrategy extends ContainerAwareExecutionStrategy
         $args = [];
         $tokens = explode("/", $routeTemplateRaw);
         foreach ($tokens as $token) {
-            if (strpos($token, '{') === 0 && strpos($token, '}') === strlen($token)-1) {
+            if (strpos($token, '{') === 0 && strpos($token, '}') === strlen($token) - 1) {
                 $token = trim($token, '}');
                 $token = trim($token, '{');
                 $validationRules = explode(":", $token);

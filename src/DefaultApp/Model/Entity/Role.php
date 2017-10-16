@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: RoYaL
- * Date: 12/24/2016
- * Time: 12:53 AM
- */
 
 namespace DefaultApp\Model\Entity;
 

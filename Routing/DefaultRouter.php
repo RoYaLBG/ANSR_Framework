@@ -167,8 +167,8 @@ class DefaultRouter implements RouterInterface
     {
         $this->routes = include(
             $this->pathConfig->getCacheDir()
-                . DIRECTORY_SEPARATOR
-                . RouteExecutionStrategy::CACHE_FILE
+            . DIRECTORY_SEPARATOR
+            . RouteExecutionStrategy::CACHE_FILE
         );
     }
 

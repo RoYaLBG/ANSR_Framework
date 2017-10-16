@@ -7,6 +7,8 @@ use ANSR\Core\Annotation\Type\Component;
 use ANSR\Core\Annotation\Type\Value;
 
 /**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ *
  * @Component
  */
 class PathConfig implements PathConfigInterface

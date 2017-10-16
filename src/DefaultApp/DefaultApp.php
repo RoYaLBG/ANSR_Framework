@@ -7,6 +7,9 @@ use ANSR\Core\FrameworkConsumer;
 use DefaultApp\Service\UserService;
 use DefaultApp\Service\UserServiceInterface;
 
+/**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ */
 class DefaultApp extends FrameworkConsumer
 {
     public function preLoadHook()

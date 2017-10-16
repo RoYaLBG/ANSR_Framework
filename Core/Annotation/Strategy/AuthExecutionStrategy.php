@@ -38,7 +38,9 @@ class AuthExecutionStrategy extends ContainerAwareExecutionStrategy
         $action = $this->annotation->getAnnotatedMethod();
 
         $auths[$class->getName()][$action->getName()] = array_map(
-            function($role) { return trim($role); },
+            function ($role) {
+                return trim($role);
+            },
             explode(',', $this->annotation->getValue())
         );
 

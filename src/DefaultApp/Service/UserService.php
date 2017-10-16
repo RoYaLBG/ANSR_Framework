@@ -9,6 +9,8 @@ use DefaultApp\Model\Entity\User;
 use ANSR\Core\Annotation\Type\Component;
 
 /**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ *
  * @Component
  */
 class UserService implements UserServiceInterface

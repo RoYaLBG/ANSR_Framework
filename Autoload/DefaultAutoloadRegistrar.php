@@ -2,7 +2,9 @@
 
 namespace ANSR\Autoload;
 
-
+/**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ */
 class DefaultAutoloadRegistrar implements AutoloadRegistrarInterface
 {
 

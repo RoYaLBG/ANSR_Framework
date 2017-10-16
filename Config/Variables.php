@@ -1,4 +1,5 @@
 <?php
+
 namespace ANSR\Config;
 
 
@@ -8,6 +9,7 @@ class Variables
 {
     public static $args = null;
 }
+
 Variables::$args = [
     GlobalConstants::KEY_CACHE_DIR => 'cache',
     GlobalConstants::KEY_DB_HOST => DbConfig::DB_HOST,

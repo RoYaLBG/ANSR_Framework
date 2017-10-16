@@ -1,4 +1,5 @@
 <?php
+
 namespace ANSR\Core;
 
 
@@ -7,6 +8,9 @@ use ANSR\Config\Path\PathConfigInterface;
 use ANSR\Core\Annotation\Processor\AnnotationProcessorInterface;
 use ANSR\Core\Container\ContainerInterface;
 
+/**
+ * @author Ivan Yonkov <ivanynkv@gmail.com>
+ */
 class Application
 {
     const VENDOR = 'ANSR';
@@ -53,7 +57,7 @@ class Application
     {
         $this->annotationProcessor->process(
             array_merge(array_map(
-                function($app) {
+                function ($app) {
                     return self::APPLICATIONS_FOLDER . DIRECTORY_SEPARATOR . $app;
                 },
                 $this->applications
@@ -71,7 +75,7 @@ class Application
     {
         $this->applications[] = $applicationName;
 
-        $this->autoloadRegistrar->register(function($class) use($applicationName) {
+        $this->autoloadRegistrar->register(function ($class) use ($applicationName) {
             if (!strstr($class, $applicationName)) {
                 return;
             }
