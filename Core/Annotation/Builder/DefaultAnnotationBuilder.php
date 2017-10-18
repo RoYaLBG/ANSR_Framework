@@ -3,6 +3,7 @@
 namespace ANSR\Core\Annotation\Builder;
 
 
+use ANSR\Core\Annotation\AnnotatedFileInfo;
 use ANSR\Core\Annotation\AnnotationInterface;
 
 /**
@@ -61,5 +62,12 @@ class DefaultAnnotationBuilder implements AnnotationBuilderInterface
         $this->instance->setAnnotatedObject($annotationInfo);
 
         return $this->instance;
+    }
+
+    public function setAnnotedFileInfo(AnnotatedFileInfo $annotatedFileInfo): AnnotationBuilderInterface
+    {
+        $this->instance->setAnnotatedFileInfo($annotatedFileInfo);
+
+        return $this;
     }
 }

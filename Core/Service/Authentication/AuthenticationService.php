@@ -67,7 +67,7 @@ class AuthenticationService implements AuthenticationServiceInterface
         $statement->execute([$roleName, $userId]);
         $row = $statement->fetchRow();
 
-        return !empty($row);
+        return !empty($row) && $row['COUNT(*)'] > 0;
     }
 }
 

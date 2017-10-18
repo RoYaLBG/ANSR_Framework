@@ -12,6 +12,10 @@ interface AnnotationInterface
 
     public function setAnnotatedObject($annotatedObject);
 
+    public function setAnnotatedFileInfo(AnnotatedFileInfo $annotatedFileInfo);
+
+    public function getFileInfo(): AnnotatedFileInfo;
+
     /**
      * @return \ReflectionClass
      */

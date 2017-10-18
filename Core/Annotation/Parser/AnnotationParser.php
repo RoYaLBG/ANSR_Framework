@@ -3,6 +3,7 @@
 namespace ANSR\Core\Annotation\Parser;
 
 
+use ANSR\Core\Annotation\AnnotatedFileInfo;
 use ANSR\Core\Annotation\AnnotationInterface;
 use ANSR\Core\Annotation\Type\Component;
 
@@ -14,6 +15,7 @@ use ANSR\Core\Annotation\Type\Component;
 class AnnotationParser implements AnnotationParserInterface
 {
     const TOKEN_USE = 'use';
+    const TOKEN_CLASS = 'class';
 
     /**
      * @param \ReflectionClass|\ReflectionMethod $target
@@ -34,6 +36,8 @@ class AnnotationParser implements AnnotationParserInterface
             $annotationName = trim($annotationParamsTokens[0]);
             $properties = [AnnotationTokenInterface::CONSTRUCTOR_VALUE => ''];
 
+            $annotatedFileInfo = new AnnotatedFileInfo();
+
             if (!class_exists($annotationName)) {
                 $found = false;
                 $fileName = $target->getFileName();
@@ -49,8 +53,13 @@ class AnnotationParser implements AnnotationParserInterface
                             if ($annotationName == basename($annotationPath)) {
                                 $annotationName = $annotationPath;
                                 $found = true;
-                                break;
                             }
+
+                            $annotatedFileInfo->addUsing(basename($annotationPath), $annotationPath);
+                        }
+
+                        if (strpos($line, self::TOKEN_CLASS)) {
+                            break;
                         }
                     }
 
@@ -89,6 +98,8 @@ class AnnotationParser implements AnnotationParserInterface
             foreach ($properties as $key => $value) {
                 $builder = $builder->setProperty($key, $value);
             }
+
+            $builder->setAnnotedFileInfo($annotatedFileInfo);
 
             if (!array_key_exists(basename($annotationName), $annotations)) {
                 $annotations[basename($annotationName)] = [];

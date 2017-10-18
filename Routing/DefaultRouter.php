@@ -5,7 +5,10 @@ namespace ANSR\Routing;
 
 use ANSR\Config\Path\PathConfigInterface;
 use ANSR\Core\Annotation\Strategy\AuthExecutionStrategy;
+use ANSR\Core\Annotation\Strategy\InterceptedExecutionStrategy;
 use ANSR\Core\Annotation\Strategy\RouteExecutionStrategy;
+use ANSR\Core\Http\Response\ActionInterceptedResponse;
+use ANSR\Core\Interceptor\InterceptorChain;
 use ANSR\Core\WebApplication;
 use ANSR\Core\Container\ContainerInterface;
 use ANSR\Core\Http\Component\RequestInterface;
@@ -152,15 +155,39 @@ class DefaultRouter implements RouterInterface
             }
         }
 
-        $result = call_user_func_array(
-            [
-                $controller,
-                $actionName
-            ],
-            $params
+        $interceptorsInfo = include($this->pathConfig->getCacheDir() . DIRECTORY_SEPARATOR . InterceptedExecutionStrategy::CACHE_FILE);
+
+        $lastCall = function () use ($controller, $actionName, $params): ResponseInterface {
+            return call_user_func_array(
+                [
+                    $controller,
+                    $actionName
+                ],
+                $params
+            );
+        };
+
+        if (!array_key_exists($controllerName, $interceptorsInfo)) {
+            return $lastCall();
+        }
+
+        if (!array_key_exists($actionName, $interceptorsInfo[$controllerName])) {
+            return $lastCall();
+        }
+
+        $container = $this->container;
+        $interceptors = array_map(
+            function ($interceptorName) use ($container) {
+                return $container->resolve($interceptorName);
+            },
+            $interceptorsInfo[$controllerName][$actionName]
         );
 
-        return $result;
+        $chain = new InterceptorChain($interceptors);
+
+        $response = new ActionInterceptedResponse($chain, $this->request, $lastCall);
+
+        return $response;
     }
 
     private function loadRoutes()

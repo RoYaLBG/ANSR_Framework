@@ -27,6 +27,4 @@ class WebApplication
 
         $response->send();
     }
-
-
 }

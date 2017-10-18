@@ -107,6 +107,9 @@ class DefaultContainer implements ContainerInterface
         foreach ($loadedDependencies as $abstraction => $implementations) {
             $highestPriority = max(array_keys($implementations));
             $this->registerDependency($abstraction, $implementations[$highestPriority]);
+            foreach ($implementations as $implementation) {
+                $this->registerDependency($implementation, $implementation);
+            }
         }
 
         $loadedValues = include $path . DIRECTORY_SEPARATOR . ValueExecutionStrategy::CACHE_FILE;
