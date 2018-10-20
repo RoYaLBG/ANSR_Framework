@@ -33,7 +33,6 @@ $kernel->overrideAnnotationConfiguration(function (ContainerInterface $container
     );
 });
 
-
 $kernel->boot(function (\ANSR\Core\Application $app) {
     $app->registerApplication('DefaultApp');
 });

@@ -133,8 +133,6 @@ class DefaultRouter implements RouterInterface
         $refMethod = new \ReflectionMethod($controller, $actionName);
         $refParams = $refMethod->getParameters();
 
-        $count = count($this->arguments);
-
         $params = [];
         $primitiveIndex = 0;
         for ($i = 0; $i < count($refParams); $i++) {

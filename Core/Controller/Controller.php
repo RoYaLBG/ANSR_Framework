@@ -4,9 +4,11 @@ namespace ANSR\Core\Controller;
 
 
 use ANSR\Core\Http\Component\SessionInterface;
+use ANSR\Core\Http\Response\JsonResponse;
 use ANSR\Core\Http\Response\RedirectResponse;
 use ANSR\Core\Http\Response\ViewResponse;
 use ANSR\Core\Service\Authentication\AuthenticationService;
+use ANSR\Core\Service\Serialize\ObjectSerializerInterface;
 use ANSR\View\ViewInterface;
 
 /**
@@ -24,10 +26,16 @@ class Controller
      */
     private $session;
 
-    public function __construct(ViewInterface $view, SessionInterface $session)
+    /**
+     * @var ObjectSerializerInterface
+     */
+    private $serializer;
+
+    public function __construct(ViewInterface $view, SessionInterface $session, ObjectSerializerInterface $serializer)
     {
         $this->view = $view;
         $this->session = $session;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -38,6 +46,15 @@ class Controller
     protected function view($model = null, $viewName = null)
     {
         return $this->view->render($model, $viewName);
+    }
+
+    /**
+     * @param object|array $model
+     * @return JsonResponse
+     */
+    protected function json($model)
+    {
+        return new JsonResponse($model, $this->serializer);
     }
 
     /**
