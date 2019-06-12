@@ -31,11 +31,13 @@ class DefaultContainer implements ContainerInterface
     public function registerDependency(string $abstraction, string $implementation)
     {
         $this->dependencies[$abstraction] = $implementation;
+        $this->dependencies[$implementation] = $implementation;
     }
 
     public function addBean(string $abstraction, $object)
     {
         $this->dependencies[$abstraction] = get_class($object);
+        $this->dependencies[get_class($object)] = get_class($object);
         $this->resolvedDependencies[get_class($object)] = $object;
         $this->resolvedDependencies[$abstraction] = $object;
     }
@@ -77,7 +79,10 @@ class DefaultContainer implements ContainerInterface
                 $arguments[] = Variables::$args[$dependentValues[$parameter->getName()]];
             } else {
                 $dependencyInterface = $parameter->getClass();
-                $dependencyClass = $this->dependencies[$dependencyInterface->getName()];
+                $dependencyClass = $dependencyInterface->getName();
+                if (key_exists($dependencyInterface->getName(), $this->dependencies)) {
+                    $dependencyClass = $this->dependencies[$dependencyInterface->getName()];
+                }
                 $arguments[] = $this->resolve($dependencyClass, $dependencyInterface->getName());
             }
         }

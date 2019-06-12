@@ -3,6 +3,8 @@
 namespace ANSR\Core\Service\Authentication;
 
 
+use ANSR\Core\Data\Entity\User;
+use ANSR\Core\Data\Repository\UserRepository;
 use ANSR\Core\Http\Component\SessionInterface;
 use ANSR\Core\Service\Encryption\EncryptionServiceInterface;
 use ANSR\Driver\DatabaseInterface;
@@ -20,14 +22,17 @@ class AuthenticationService implements AuthenticationServiceInterface
     private $session;
     private $db;
     private $encryptionService;
+    private $userRepository;
 
     public function __construct(SessionInterface $session,
                                 DatabaseInterface $db,
-                                EncryptionServiceInterface $encryptionService)
+                                EncryptionServiceInterface $encryptionService,
+                                UserRepository $userRepository)
     {
         $this->db = $db;
         $this->session = $session;
         $this->encryptionService = $encryptionService;
+        $this->userRepository = $userRepository;
     }
 
     public function isLogged(): bool
@@ -37,17 +42,15 @@ class AuthenticationService implements AuthenticationServiceInterface
 
     public function login($username, $password): bool
     {
-        $query = "SELECT id, password FROM users WHERE username = ?";
-        $statement = $this->db->prepare($query);
-        $statement->execute([$username]);
-        $result = $statement->fetchRow();
+        /** @var User $result */
+        $result = $this->userRepository->findOneBy(['username' => $username]);
 
         if (!$result) {
             return false;
         }
 
-        if ($this->encryptionService->verify($password, $result['password'])) {
-            $this->session->setAttribute(self::KEY_SESSION_USER_ID, $result['id']);
+        if ($this->encryptionService->verify($password, $result->getPassword())) {
+            $this->session->setAttribute(self::KEY_SESSION_USER_ID, $result->getId());
             return true;
         }
 

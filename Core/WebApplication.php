@@ -10,6 +10,7 @@ use ANSR\Routing\RouterInterface;
  */
 class WebApplication
 {
+    const APPLICATIONS_FOLDER = 'src';
     /**
      * @var RouterInterface
      */

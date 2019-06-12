@@ -86,6 +86,17 @@ class UsersController extends Controller
     }
 
     /**
+     * @Route("/users/me/courses/{id}/enroll", name="enroll_to_course", method="GET")
+     * @Auth("ADMIN")
+     *
+     * @param int $courseId
+     */
+    public function enrollToCourse(int $courseId)
+    {
+
+    }
+
+    /**
      * @Route("/users/profile", name="user_profile", method="GET")
      * @Auth("USER")
      *

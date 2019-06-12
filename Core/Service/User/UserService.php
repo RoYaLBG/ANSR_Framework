@@ -1,7 +1,11 @@
 <?php
+
 namespace ANSR\Core\Service\User;
 
 
+use ANSR\Core\Data\Entity\User;
+use ANSR\Core\Data\EntityManagerInterface;
+use ANSR\Core\Data\Repository\UserRepository;
 use ANSR\Core\Service\Encryption\EncryptionServiceInterface;
 use ANSR\Driver\DatabaseInterface;
 use ANSR\Core\Annotation\Type\Component;
@@ -13,28 +17,48 @@ use ANSR\Core\Annotation\Type\Component;
  */
 class UserService implements UserServiceInterface
 {
-    private $db;
-    private $encryptionService;
-
     const ROLE_DEFAULT = 'USER';
 
+    /**
+     * @var DatabaseInterface
+     */
+    private $db;
+
+    /**
+     * @var EncryptionServiceInterface
+     */
+    private $encryptionService;
+
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
     public function __construct(DatabaseInterface $db,
-                                EncryptionServiceInterface $encryptionService)
+                                EncryptionServiceInterface $encryptionService,
+                                UserRepository $userRepository,
+                                EntityManagerInterface $entityManager)
     {
         $this->db = $db;
         $this->encryptionService = $encryptionService;
+        $this->userRepository = $userRepository;
+        $this->entityManager = $entityManager;
     }
+
 
     public function register($username, $password, array $roles = []): bool
     {
         $passwordHash = $this->encryptionService->encrypt($password);
-        $query = "INSERT INTO users (username, password) VALUES (?, ?)";
-        $statement = $this->db->prepare($query);
-        $result = $statement->execute([$username, $passwordHash]);
+        $user = new User();
+        $user->setUsername($username);
+        $user->setPassword($passwordHash);
 
-        if (!$result) {
-            return false;
-        }
+        $this->entityManager->persist($user);
 
         if (empty($roles)) {
             $roles = [self::ROLE_DEFAULT];

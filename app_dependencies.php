@@ -40,3 +40,8 @@ $container->addBean(
     \ANSR\Core\Container\ContainerInterface::class,
     $container
 );
+
+$container->registerDependency(
+    \ANSR\Core\Data\Query\QueryBuilderInterface::class,
+    \ANSR\Core\Data\Query\MySQLQueryBuilder::class
+);

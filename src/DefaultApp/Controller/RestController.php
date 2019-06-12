@@ -31,7 +31,7 @@ class RestController extends Controller
     }
 
     /**
-     * @Route("/users/{id}", name="one_user", method="GET")
+     * @Route("/user/{id}", name="one_user", method="GET")
      *
      * @param int $id
      * @return JsonResponse
