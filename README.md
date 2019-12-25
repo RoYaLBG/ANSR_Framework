@@ -15,8 +15,7 @@ An automatic mapping of the request body to an object of certain class. No more 
 The framework starts and then it loads your application, putting it in it's own control. It might sounds scary, but this way you do not need
 to care about how and when objects are instantiated.
 
-###
-Dependency Injection
+#### Dependency Injection
 IoC leads to dependency injection. Whenever you need a certain business object, you just require it in the constructor or the function arguments.
 ANSR Framework will do its work.
 
